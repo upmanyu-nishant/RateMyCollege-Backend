@@ -23,7 +23,7 @@ EXPOSE 8080
 
 # Set environment variables for MongoDB connection
 ENV DATASOURCE_URI=mongodb+srv://nishantupmanyu24:b0igQmmoLLdc2Tdc@cluster0.wvt73.mongodb.net/RateMyCollege?retryWrites=true&w=majority
-ENV FRONTEND_URL=http://localhost:3000
+ENV FRONTEND_URL=https://www.ratemycollege.co.in
 
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -1,6 +1,8 @@
 package com.project.rate_my_college.security;
 
 import com.project.rate_my_college.util.JwtFilter;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,6 +18,9 @@ import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 public class SecurityConfig {
+
+    @Value("${frontend.url}")
+    private String frontendUrl;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -34,7 +39,6 @@ public class SecurityConfig {
                 // Publicly accessible endpoints
                 .requestMatchers(
                     "/api/auth/authenticate", 
-                    "/api/auth/login", 
                     "/api/ratingCards/college/**", 
                     "/api/ratingCards/email/**", 
                     "/api/colleges",               // Allow access to GET /api/colleges
@@ -64,16 +68,26 @@ public class SecurityConfig {
 
         return http.build();
     }
-     @Bean
+
+    @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("http://localhost:3000"); // Allow frontend origin
-        configuration.addAllowedMethod("*"); // Allow all HTTP methods
-        configuration.addAllowedHeader("*"); // Allow all headers
-        configuration.setAllowCredentials(true); // Allow cookies or credentials
+        //Allow all origins
+        configuration.addAllowedOriginPattern(frontendUrl);
 
+        // Allow all methods (GET, POST, PUT, DELETE, OPTIONS, etc.)
+        configuration.addAllowedMethod("*");
+
+        // Allow all headers
+        configuration.addAllowedHeader("*");
+
+        // Allow credentials (cookies, etc.)
+        configuration.setAllowCredentials(true);
+
+        // Apply the configuration to all paths
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+
         return source;
     }
 }
