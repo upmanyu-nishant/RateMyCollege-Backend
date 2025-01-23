@@ -18,3 +18,4 @@ com/project/rate_my_college/service/SequenceGeneratorService.class
 com/project/rate_my_college/util/CorsConfig.class
 com/project/rate_my_college/util/JwtFilter.class
 com/project/rate_my_college/controller/AuthController.class
+com/project/rate_my_college/security/SecurityConfig$HeaderFilter.class

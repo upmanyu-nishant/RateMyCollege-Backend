@@ -55,8 +55,7 @@ public class AuthController {
 
             if (user.getFirstName() == null || user.getFirstName().isEmpty() ||
                 user.getLastName() == null || user.getLastName().isEmpty() ||
-                 user.getEmail() == null || user.getEmail().isEmpty() ||
-                 user.getPassword() == null || user.getPassword().isEmpty()) {
+                 user.getEmail() == null || user.getEmail().isEmpty()) {
                 return ResponseEntity.badRequest().body("Incomplete information. First name and last name are required.");
             }
             // If the user does not exist, register the user
