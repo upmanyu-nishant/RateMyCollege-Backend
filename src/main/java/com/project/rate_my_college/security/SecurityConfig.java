@@ -38,7 +38,8 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Publicly accessible endpoints
                 .requestMatchers(
-                    "/api/auth/authenticate", 
+                    "/api/auth/authenticate",
+                    "/api/auth/refresh",
                     "/api/ratingCards/college/**", 
                     "/api/ratingCards/email/**", 
                     "/api/colleges",               // Allow access to GET /api/colleges
