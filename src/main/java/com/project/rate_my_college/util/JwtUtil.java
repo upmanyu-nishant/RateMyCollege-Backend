@@ -31,7 +31,7 @@ public class JwtUtil {
         return Jwts.builder()
                 .setSubject(email)
                 .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 1)) // 1-hour validity
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 12)) // 12-hour validity
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
