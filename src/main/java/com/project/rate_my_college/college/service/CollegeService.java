@@ -1,8 +1,10 @@
-package com.project.rate_my_college.service;
+package com.project.rate_my_college.college.service;
 
-import com.project.rate_my_college.model.College;
-import com.project.rate_my_college.repository.CollegeRepository;
-import com.project.rate_my_college.repository.RatingCardRepository;
+import com.project.rate_my_college.college.model.College;
+import com.project.rate_my_college.college.repository.CollegeRepository;
+import com.project.rate_my_college.college.repository.CollegeRatingCardRepository;
+import com.project.rate_my_college.service.SequenceGeneratorService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ public class CollegeService {
     private CollegeRepository collegeRepository;
 
     @Autowired
-    private RatingCardRepository ratingCardRepository;
+    private CollegeRatingCardRepository ratingCardRepository;
 
     @Autowired
     private SequenceGeneratorService sequenceGeneratorService;

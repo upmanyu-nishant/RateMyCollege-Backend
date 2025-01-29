@@ -1,9 +1,10 @@
-package com.project.rate_my_college.service;
+package com.project.rate_my_college.college.service;
 
-import com.project.rate_my_college.model.College;
-import com.project.rate_my_college.model.RatingCard;
-import com.project.rate_my_college.repository.CollegeRepository;
-import com.project.rate_my_college.repository.RatingCardRepository;
+import com.project.rate_my_college.college.model.College;
+import com.project.rate_my_college.college.model.CollegeRatingCard;
+import com.project.rate_my_college.college.repository.CollegeRepository;
+import com.project.rate_my_college.college.repository.CollegeRatingCardRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,27 +13,27 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class RatingCardService {
+public class CollegeRatingCardService {
 
     @Autowired
-    private RatingCardRepository ratingCardRepository;
+    private CollegeRatingCardRepository ratingCardRepository;
 
     @Autowired
     private CollegeRepository collegeRepository;
 
-    public List<RatingCard> getRatingsByCollegeId(String collegeId) {
+    public List<CollegeRatingCard> getRatingsByCollegeId(String collegeId) {
         return ratingCardRepository.findByCollegeId(collegeId);
     }
 
-    public List<RatingCard> getRatingsByEmailId(String emailId) {
+    public List<CollegeRatingCard> getRatingsByEmailId(String emailId) {
         return ratingCardRepository.findByEmailId(emailId);  // Fetch rating cards by emailId
     }
 
-    public RatingCard addRatingCard(RatingCard ratingCard) {
+    public CollegeRatingCard addRatingCard(CollegeRatingCard ratingCard) {
         double overallRating = calculateOverallRating(ratingCard);
         ratingCard.setOverallRating(overallRating);  // Set the overall rating as the average of all other ratings
 
-        RatingCard savedRatingCard = ratingCardRepository.save(ratingCard);
+        CollegeRatingCard savedRatingCard = ratingCardRepository.save(ratingCard);
 
         // Update the associated college's ratings
         updateCollegeRatings(ratingCard.getCollegeId());
@@ -41,9 +42,9 @@ public class RatingCardService {
     }
 
     public boolean deleteRatingCard(String id) {
-        Optional<RatingCard> optionalRatingCard = ratingCardRepository.findById(id);
+        Optional<CollegeRatingCard> optionalRatingCard = ratingCardRepository.findById(id);
         if (optionalRatingCard.isPresent()) {
-            RatingCard ratingCard = optionalRatingCard.get();
+            CollegeRatingCard ratingCard = optionalRatingCard.get();
             ratingCardRepository.deleteById(id);
 
             // Update the associated college's ratings
@@ -53,10 +54,10 @@ public class RatingCardService {
         return false;
     }
 
-    public RatingCard updateRatingCard(String id, Map<String, Object> updates) {
-        Optional<RatingCard> optionalRatingCard = ratingCardRepository.findById(id);
+    public CollegeRatingCard updateRatingCard(String id, Map<String, Object> updates) {
+        Optional<CollegeRatingCard> optionalRatingCard = ratingCardRepository.findById(id);
         if (optionalRatingCard.isPresent()) {
-            RatingCard ratingCard = optionalRatingCard.get();
+            CollegeRatingCard ratingCard = optionalRatingCard.get();
 
             // Update fields if they exist in the request body
             if (updates.containsKey("approved")) {
@@ -72,7 +73,7 @@ public class RatingCardService {
                 ratingCard.setReportCount((Integer) updates.get("reportCount"));
             }
 
-            RatingCard updatedRatingCard = ratingCardRepository.save(ratingCard);
+            CollegeRatingCard updatedRatingCard = ratingCardRepository.save(ratingCard);
 
             // Update the associated college's ratings
             updateCollegeRatings(ratingCard.getCollegeId());
@@ -82,7 +83,7 @@ public class RatingCardService {
         return null;  // Return null if not found
     }
 
-    private double calculateOverallRating(RatingCard ratingCard) {
+    private double calculateOverallRating(CollegeRatingCard ratingCard) {
         double sum = ratingCard.getReputation()
                 + ratingCard.getLocationRating()
                 + ratingCard.getOpportunities()
@@ -104,7 +105,6 @@ public class RatingCardService {
             // Update total reviews count
             long reviewCount = ratingCardRepository.countByCollegeId(collegeId);
             college.setTotalReviews((int) reviewCount);
-
             // Update average ratings for each category
             college.setOverallRating(getAverageValue(ratingCardRepository.getAverageOverallRating(collegeId)));
             college.setReputation(getAverageValue(ratingCardRepository.getAverageReputation(collegeId)));

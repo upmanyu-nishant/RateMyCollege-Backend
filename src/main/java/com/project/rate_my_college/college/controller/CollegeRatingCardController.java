@@ -1,7 +1,7 @@
-package com.project.rate_my_college.controller;
+package com.project.rate_my_college.college.controller;
 
-import com.project.rate_my_college.model.RatingCard;
-import com.project.rate_my_college.service.RatingCardService;
+import com.project.rate_my_college.college.model.CollegeRatingCard;
+import com.project.rate_my_college.college.service.CollegeRatingCardService;
 import com.project.rate_my_college.util.JwtUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,34 +13,34 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/ratingCards")
-public class RatingCardController {
+public class CollegeRatingCardController {
 
     @Autowired
-    private RatingCardService ratingCardService;
+    private CollegeRatingCardService ratingCardService;
 
     @Autowired
     private JwtUtil jwtUtil;
 
     // Public GET Endpoint: No Authorization Needed
     @GetMapping("/college/{collegeId}")
-    public List<RatingCard> getRatingsByCollegeId(@PathVariable String collegeId) {
+    public List<CollegeRatingCard> getRatingsByCollegeId(@PathVariable String collegeId) {
         return ratingCardService.getRatingsByCollegeId(collegeId);
     }
 
     // Public GET Endpoint: No Authorization Needed
     @GetMapping("/email/{emailId}")
-    public List<RatingCard> getRatingsByEmailId(@PathVariable String emailId) {
+    public List<CollegeRatingCard> getRatingsByEmailId(@PathVariable String emailId) {
         return ratingCardService.getRatingsByEmailId(emailId);
     }
 
     // Secured POST Endpoint: Requires Authorization
     @PostMapping
-    public ResponseEntity<RatingCard> addRatingCard(@RequestHeader("Authorization") String authorizationHeader,
-                                                    @RequestBody RatingCard ratingCard) {
+    public ResponseEntity<CollegeRatingCard> addRatingCard(@RequestHeader("Authorization") String authorizationHeader,
+                                                    @RequestBody CollegeRatingCard ratingCard) {
         String token = jwtUtil.extractToken(authorizationHeader); // Extract token
         String email = jwtUtil.extractEmail(token); // Validate token and extract email
         ratingCard.setEmailId(email); // Attach email from token to the rating
-        RatingCard savedRatingCard = ratingCardService.addRatingCard(ratingCard);
+        CollegeRatingCard savedRatingCard = ratingCardService.addRatingCard(ratingCard);
         return ResponseEntity.ok(savedRatingCard);
     }
 
@@ -60,12 +60,12 @@ public class RatingCardController {
 
     // Secured PATCH Endpoint: Requires Authorization
     @PatchMapping("/{id}")
-    public ResponseEntity<RatingCard> updateRatingCard(@RequestHeader("Authorization") String authorizationHeader,
+    public ResponseEntity<CollegeRatingCard> updateRatingCard(@RequestHeader("Authorization") String authorizationHeader,
                                                        @PathVariable String id,
                                                        @RequestBody Map<String, Object> updates) {
         String token = jwtUtil.extractToken(authorizationHeader); // Extract token
         jwtUtil.validateToken(token); // Validate token
-        RatingCard updatedRatingCard = ratingCardService.updateRatingCard(id, updates);
+        CollegeRatingCard updatedRatingCard = ratingCardService.updateRatingCard(id, updates);
         if (updatedRatingCard != null) {
             return ResponseEntity.ok(updatedRatingCard);
         } else {

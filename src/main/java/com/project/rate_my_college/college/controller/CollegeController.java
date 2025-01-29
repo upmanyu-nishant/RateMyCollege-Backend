@@ -1,7 +1,7 @@
-package com.project.rate_my_college.controller;
+package com.project.rate_my_college.college.controller;
 
-import com.project.rate_my_college.model.College;
-import com.project.rate_my_college.service.CollegeService;
+import com.project.rate_my_college.college.model.College;
+import com.project.rate_my_college.college.service.CollegeService;
 import com.project.rate_my_college.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

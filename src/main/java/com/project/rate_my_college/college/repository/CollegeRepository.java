@@ -1,8 +1,9 @@
-package com.project.rate_my_college.repository;
+package com.project.rate_my_college.college.repository;
 
-import com.project.rate_my_college.model.College;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+
+import com.project.rate_my_college.college.model.College;
 
 import java.util.List;
 

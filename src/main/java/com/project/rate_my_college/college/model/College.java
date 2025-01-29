@@ -1,4 +1,4 @@
-package com.project.rate_my_college.model;
+package com.project.rate_my_college.college.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

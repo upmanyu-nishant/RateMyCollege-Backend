@@ -38,6 +38,9 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 // Publicly accessible endpoints
                 .requestMatchers(
+                    "/api/courseRatings/course/**",
+                    "/api/courseRatings/email/**",
+                    "/api/courses/college/**",
                     "/api/auth/authenticate",
                     "/api/auth/refresh",
                     "/api/ratingCards/college/**", 

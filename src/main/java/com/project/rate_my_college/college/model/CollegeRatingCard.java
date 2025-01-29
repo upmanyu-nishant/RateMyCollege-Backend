@@ -1,11 +1,11 @@
-package com.project.rate_my_college.model;
+package com.project.rate_my_college.college.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.Date;
 
 @Document(collection = "ratingCards")
-public class RatingCard {
+public class CollegeRatingCard {
     @Id
     private String id;
     private String collegeId;  // Reference to College ID
@@ -20,6 +20,13 @@ public class RatingCard {
     private double clubs;
     private double social;
     private double happiness;
+	private double safety;
+    private boolean approved;  // Whether the review is approved
+    private Date date;
+    private int helpfulCount;
+    private int notHelpfulCount;
+    private int reportCount;
+    private String comment;
     public String getId() {
 		return id;
 	}
@@ -140,13 +147,7 @@ public class RatingCard {
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	private double safety;
-    private boolean approved;  // Whether the review is approved
-    private Date date;
-    private int helpfulCount;
-    private int notHelpfulCount;
-    private int reportCount;
-    private String comment;
+	
 
     // Getters and Setters
 }

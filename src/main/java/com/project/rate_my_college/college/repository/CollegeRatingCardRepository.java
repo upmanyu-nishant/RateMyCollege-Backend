@@ -1,14 +1,14 @@
-package com.project.rate_my_college.repository;
+package com.project.rate_my_college.college.repository;
 import org.springframework.data.mongodb.repository.Aggregation;
-
-
-import com.project.rate_my_college.model.RatingCard;
 import org.springframework.data.mongodb.repository.MongoRepository;
+
+import com.project.rate_my_college.college.model.CollegeRatingCard;
+
 import java.util.List;
 
-public interface RatingCardRepository extends MongoRepository<RatingCard, String> {
-    List<RatingCard> findByCollegeId(String collegeId);
-    List<RatingCard> findByEmailId(String emailId);  // Find rating cards by emailId
+public interface CollegeRatingCardRepository extends MongoRepository<CollegeRatingCard, String> {
+    List<CollegeRatingCard> findByCollegeId(String collegeId);
+    List<CollegeRatingCard> findByEmailId(String emailId);  // Find rating cards by emailId
     long countByCollegeId(String collegeId);
     
  // Method to calculate average values for each field
